@@ -21,7 +21,7 @@ public class StockStreamController {
         this.broadcaster = broadcaster;
     }
 
-    @GetMapping(value = "/live", produces = MediaType.APPLICATION_NDJSON_VALUE)
+    @GetMapping(value = "/live", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<Map<String, Object>> streamLivePrices() {
         return broadcaster.stream();
     }

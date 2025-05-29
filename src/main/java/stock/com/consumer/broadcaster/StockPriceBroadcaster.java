@@ -16,6 +16,9 @@ public class StockPriceBroadcaster {
     }
 
     public Flux<Map<String,Object>> stream() {
-        return sink.asFlux();
+        Flux<Map<String,Object>> flux = sink.asFlux();
+        System.out.println("stream stock price: subscribing to flux");
+        flux.doOnNext(price -> System.out.println("streamed stock price: " + price)).subscribe();
+        return flux;
     }
 }

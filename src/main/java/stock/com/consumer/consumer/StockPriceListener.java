@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 import stock.com.consumer.broadcaster.StockPriceBroadcaster;
 
 import java.util.Map;
 
+@Component
 public class StockPriceListener {
 
     private static final Logger logger = LoggerFactory.getLogger(StockPriceListener.class);
@@ -22,6 +24,7 @@ public class StockPriceListener {
 
     @KafkaListener(topics = "stock-prices", groupId = "stock-ticker")
     public void consume(String json) throws JsonProcessingException {
+
         Map<String, Object> price = mapper.readValue(json, Map.class);
         logger.info("Stock prices: {}", price);
         broadcaster.publish(price);
